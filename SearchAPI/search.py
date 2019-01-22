@@ -23,10 +23,10 @@ collection = db['twitter_collection']
 
 
 # Variables that contains the user credentials to access Twitter API
-ACCESS_TOKEN = '1041265000659054592-TO9lxogdVoHRlYWxcHFqa52PTJe9nA'
-ACCESS_SECRET = 'O3wOOdyPxABUkfvSd1CQMBZFZ3DVAUTh0ihfhsw2QuqvW'
-CONSUMER_KEY = 'k2UjjnOtpDGRoWyjYNcJJo1rw'
-CONSUMER_SECRET = '3HcN7u1Jd0Gdb5iPuH8goyZ7LHzWyxCvhbFonTI82ntag6uApS'
+ACCESS_TOKEN = ''
+ACCESS_SECRET = ''
+CONSUMER_KEY = ''
+CONSUMER_SECRET = ''
 
 # Setup tweepy to authenticate with Twitter credentials:
 
