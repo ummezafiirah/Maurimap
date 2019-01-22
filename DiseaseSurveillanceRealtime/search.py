@@ -77,9 +77,8 @@ class StdOutListener(StreamListener):
 
 if __name__ == '__main__':
     listener = StdOutListener()
-    auth = OAuthHandler("k2UjjnOtpDGRoWyjYNcJJo1rw", "3HcN7u1Jd0Gdb5iPuH8goyZ7LHzWyxCvhbFonTI82ntag6uApS")
-    auth.set_access_token("1041265000659054592-TO9lxogdVoHRlYWxcHFqa52PTJe9nA",
-                          "O3wOOdyPxABUkfvSd1CQMBZFZ3DVAUTh0ihfhsw2QuqvW")
+    auth = OAuthHandler("", "")
+    auth.set_access_token("", "")
     stream = Stream(auth, listener)
 
     print("Showing all new tweets:")
