@@ -1,0 +1,16 @@
+import pymongo
+
+myclient = pymongo.MongoClient('mongodb://localhost:27017/')
+print(myclient.list_database_names())
+mydb = myclient['myproject']
+mycol = mydb["practice"]
+
+name = input("Enter your name")
+addr = input("Enter your address")
+mylist = { "name": (name), "address": (addr)}
+
+if (mycol.find_one({"name": name,"address": addr}) is None):
+    print("Name not in db:inserting name:"+name)
+    x = mycol.insert_one(mylist)
+else:
+    print("Name in db:Not inserting name:" + name)
