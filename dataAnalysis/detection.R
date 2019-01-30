@@ -74,7 +74,7 @@ monitored_salmonella <- earsC(salmonella,control = list(method = "C3",
                                                         alpha = 0.01,
                                                         baseline = 20))
 #plot(monitored_salmonella)
-#############################FARRINGTON###############################################
+#############################FARRINGTON--working###############################################
 #Function farrington takes an sts and a control object as arguments
 #b Number of years to go back in time
 #w Window size
