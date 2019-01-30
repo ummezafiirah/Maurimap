@@ -22,7 +22,7 @@ belgium <- read.csv("C:/Users/zafiirah/Desktop/AC level 3/FYP/public_cases.csv")
 #                                 multinomialTS="logical"))
 
 belgium_sts <- function(disease, data){
-
+  
   # filter the chosen disease
   disease_data <- dplyr::filter_(data, paste0("Subject == \"",disease,"\""))
   
@@ -54,27 +54,27 @@ library(surveillance)
 #Function ears takes an sts and a control object as arguments
 salmonella <- belgium_sts(disease = "SALM", data = belgium)
 #plot(salmonella)
-monitored_salmonella <- earsC(salmonella,control = list(method = "C1",
-                                                        alpha = 0.01,
-                                                        baseline = 20))
-#plot(monitored_salmonella)
+monitored_salmonellac1 <- earsC(salmonella,control = list(method = "C1",
+                                                          alpha = 0.01,
+                                                          baseline = 20))
+plot(monitored_salmonellac1)
 ######################################EARSC2--working############################################
 #Function ears takes an sts and a control object as arguments
 salmonella <- belgium_sts(disease = "SALM", data = belgium)
 #plot(salmonella)
-monitored_salmonella <- earsC(salmonella,control = list(method = "C2",
-                                                        alpha = 0.01,
-                                                        baseline = 20))
-#plot(monitored_salmonella)
+monitored_salmonellac2 <- earsC(salmonella,control = list(method = "C2",
+                                                          alpha = 0.01,
+                                                          baseline = 20))
+plot(monitored_salmonellac2)
 ######################################EARSC3--working############################################
 #Function ears takes an sts and a control object as arguments
 salmonella <- belgium_sts(disease = "SALM", data = belgium)
 #plot(salmonella)
-monitored_salmonella <- earsC(salmonella,control = list(method = "C3",
-                                                        alpha = 0.01,
-                                                        baseline = 20))
-#plot(monitored_salmonella)
-#############################FARRINGTON--working###############################################
+monitored_salmonellac3 <- earsC(salmonella,control = list(method = "C3",
+                                                          alpha = 0.01,
+                                                          baseline = 20))
+plot(monitored_salmonellac3)
+#############################FARRINGTON###############################################
 #Function farrington takes an sts and a control object as arguments
 #b Number of years to go back in time
 #w Window size
@@ -82,8 +82,8 @@ monitored_salmonella <- earsC(salmonella,control = list(method = "C3",
 #alpha An approximate two-sided (1 − α)% prediction interval is calculated
 
 control <- list(b = 25, w = 5, range = 64:417, alpha = 0.01)
-monitored_salmonella2 <- farrington(salmonella, control = control)
-#plot(monitored_salmonella2)
+monitored_salmonellafarrington <- farrington(salmonella, control = control)
+plot(monitored_salmonellafarrington)
 
 monitored_salmonella_df2 <- as.data.frame(monitored_salmonella2)
 #knitr::kable(monitored_salmonella_df2)
