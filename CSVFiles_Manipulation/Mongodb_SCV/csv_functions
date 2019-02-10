@@ -1,0 +1,66 @@
+def create_twitter(results):
+    records = []
+    for record in results:
+        tmp = []
+        headers = ['id', 'diseasetype','date']
+        #print(record)
+        #print(str(record['_id']).split("(")[0])
+        tmp.append(str(record['_id']).split("(")[0])
+        #print(str(record['diseasetype']))
+        tmp.append(str(record['diseasetype']))
+        #print(str(record['Tweet']))
+        tmp.append(str(record['date']))
+        # print(str(record['date']))
+        #tmp.append(str(record['Tweet']))
+        #print(str(record['latitude']))
+        #tmp.append(str(record['latitude']))
+        #print(str(record['longitude']))
+        #tmp.append(str(record['longitude']))
+        records.append(tmp)
+    print('Prepared twitter table.')
+    return records, headers
+
+def create_testing(results):
+    records = []
+    for record in results:
+        tmp = []
+        headers = ['id', 'name','surname','addr']
+        #print(record)
+        #print(str(record['_id']).split("(")[0])
+        tmp.append(str(record['_id']).split("(")[0])
+        #print(str(record['diseasetype']))
+        tmp.append(str(record['name']))
+        #print(str(record['Tweet']))
+        tmp.append(str(record['surname']))
+        tmp.append(str(record['addr']))
+        # print(str(record['date']))
+        #tmp.append(str(record['Tweet']))
+        #print(str(record['latitude']))
+        #tmp.append(str(record['latitude']))
+        #print(str(record['longitude']))
+        #tmp.append(str(record['longitude']))
+        records.append(tmp)
+    print('Prepared testing table.')
+    return records, headers
+
+
+def create_table(records, headers, file_path):
+    "Take a list of records and headers and generate csv"
+    f = open(file_path, 'w', encoding='utf-8')
+    row_len = len(headers)
+    f.write(format_list(headers, row_len, ',', '"'))
+    for record in records:
+        f.write(format_list(record, row_len, ',', '"'))
+    f.close()
+    print('CSV file successfully created: {}'.format(file_path))
+
+def format_list(list, length, delimiter, quote):
+    counter = 1
+    string = ''
+    for record in list:
+        if counter == length:
+            string += quote + record + quote + '\n'
+        else:
+            string += quote + record + quote + delimiter
+        counter += 1
+    return string
