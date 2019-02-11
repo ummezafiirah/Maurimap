@@ -1,30 +1,39 @@
+#mongoExport = "mongoexport --host Cluster0-shard-0/cluster0-shard-00-00-oov30.mongodb.net:27017,cluster0-shard-00-01-oov30.mongodb.net:27017,cluster0-shard-00-02-oov30.mongodb.net:27017 --ssl --username fyp_admin --password 12fyp_project --authenticationDatabase admin --db test2 --collection testing --type csv --out user"
 import pymongo
 #MONGODB ATLAS URL
-from Mongodb_SCV.csv_functions import create_twitter, create_testing
-from Mongodb_SCV.csv_functions import create_table
+from Mongodb_SCV.csv_functions import create_dict
 
-DB_URI = ''
+#import Mongodb_SCV.csv_functions
+
+DB_URI = 'mongodb+srv://fyp_admin:fyp_pwd@cluster0-oov30.mongodb.net/test?retryWrites=true'
+
+'''
+client = pymongo.MongoClient(DB_URI)
+db = client.test
+collection =db.twitter
+results = collection.find()
+rest_tup = create_list(results)
+rest_records = rest_tup[0]
+rest_headers = rest_tup[1]
+#print(rest_records)
+#print(rest_headers)
+create_file(rest_records, rest_headers, './twitter.csv')
+
+collection =db.facebook
+results = collection.find()
+rest_tup = create_list(results)
+rest_records = rest_tup[0]
+rest_headers = rest_tup[1]
+#create_table(rest_records, rest_headers, './twitter.csv')'''
 
 client = pymongo.MongoClient(DB_URI)
 db = client.test
-collection = db.twitter
-#results = collection.find()
-#rest_tup = create_twitter(results)
-#rest_records = rest_tup[0]
-#rest_headers = rest_tup[1]
-#print(rest_records)
-#print(rest_headers)
-#create_table(rest_records, rest_headers, './twitter.csv')
-
-client = pymongo.MongoClient(DB_URI)
-db = client.test2
-collection =db.testing
+collection =db.twitter
 results = collection.find()
-rest_tup = create_testing(results)
-rest_records = rest_tup[0]
-rest_headers = rest_tup[1]
-print(rest_records)
-print(rest_headers)
-create_table(rest_records, rest_headers, './testing.csv')
+rest_tup = create_dict(results)
+
+collection =db.testtest
+results = collection.find()
+rest_tup = create_dict(results)
 
 
