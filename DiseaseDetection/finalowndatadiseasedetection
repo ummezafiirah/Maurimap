@@ -1,0 +1,115 @@
+# Title     : TODO
+# Objective : TODO
+# Created by: zafiirah
+# Created on: 2/24/2019
+# Title     : TODO
+# Objective : TODO
+# Created by: zafiirah
+# Created on: 1/17/2019
+#print(.libPaths())
+##packages: spc
+library(readr)
+library(kableExtra)
+diseases <- readr::read_csv("C:/Users/zafiirah/Desktop/AC level 3/FYP/allData.csv")
+print(knitr::kable(head(diseases)))
+
+#function to convert data about specific disease in sts class
+#A surveillance time series {yit;t = 1, . . . , n, i = 1, . . . , m} is
+#represented using objects of class sts (surveillance time series)
+#The sts S4 class has the following form
+# setClass( "sts", representation(epoch = "numeric",
+#                                 freq = "numeric",
+#                                 start = "numeric",
+#                                 observed = "matrix",
+#                                 state = "matrix",
+#                                 alarm = "matrix",
+#                                 upperbound = "matrix",
+#                                 neighbourhood= "matrix",
+#                                 populationFrac= "matrix",
+#                                 map = "SpatialPolygonsDataFrame",
+#                                 control = "list",
+#                                 epochAsDate="logical",
+#                                 multinomialTS="logical"))
+
+
+diseases_sts <- function(disease, data){
+
+  # filter the chosen disease
+  disease_data <- dplyr::filter_(data, paste0("Subject == \"",disease,"\""))
+
+  # aggregated cases by week to get the weekly number of cases
+  observed <- dplyr::group_by(disease_data, DateMonday)
+  observed <- dplyr::summarize(observed, n_cases = n())
+
+  # create the sts object
+  specific_disease_sts <- surveillance::sts(observed = observed$n_cases, # weekly number of cases
+                                   start = c(min(lubridate::year(observed$DateMonday)), 01), # first week of the time series
+                                   ##start A vector of length two containing the origin of the time
+                                   ##series as c(year, week).
+                                   frequency = 52, # weekly data
+                                   ##freq A numeric specifying the period of the time series, i.e. 52 for
+                                   ##weekly data, 12 for monthly data, etc.
+                                   epochAsDate = TRUE, # we do have dates, not only index
+                                   ##epochAsDate Boolean, if TRUE then the epoch vector is interpreted as a
+                                   ##vector of class Date, i.e. dates in ISO 8601 date standard
+                                   epoch = as.numeric(observed$DateMonday) # here are the dates
+  )
+
+  specific_disease_sts
+}
+
+
+
+library(surveillance)
+library(surveillance)
+influenza <- diseases_sts(disease = "influenza", data = diseases)
+gastroenteritis <- diseases_sts(disease = "gastroenteritis", data = diseases)
+conjunctivitis <- diseases_sts(disease = "conjunctivitis", data = diseases)
+respiratoryinfection <- diseases_sts(disease = "respiratory infection", data = diseases)
+
+library("ggplot2")
+######################################EARSC1--influenza############################################
+#Function ears takes an sts and a control object as arguments
+monitored_influenza_C1 <- earsC(influenza,
+                                  control = list(
+                                                 method = "C1",
+                                                 alpha = 0.001,
+                                                 baseline = 3))
+png(file="C:/Users/zafiirah/PycharmProjects/flaskBootstrap/flask_boot/static/img/influenza.png")
+png("influenza.png")
+plot(monitored_influenza_C1)
+dev.off()
+######################################EARSC1--gastroenteritis############################################
+#Function ears takes an sts and a control object as arguments
+
+monitored_gastroenteritis_C1 <- earsC(gastroenteritis,
+                              control = list(
+                                method = "C1",
+                                alpha = 0.001,
+                                baseline = 3))
+png(file="C:/Users/zafiirah/PycharmProjects/flaskBootstrap/flask_boot/static/img/gastro.png")
+png("gastro.png")
+plot(monitored_gastroenteritis_C1)
+dev.off()
+######################################EARSC1--conjunctivitis############################################
+#Function ears takes an sts and a control object as arguments
+monitored_conjunctivitis_C1 <- earsC(conjunctivitis,
+                                  control = list(
+                                                 method = "C1",
+                                                 alpha = 0.001,
+                                                 baseline = 3))
+png(file="C:/Users/zafiirah/PycharmProjects/flaskBootstrap/flask_boot/static/img/conjunctivitis.png")
+png("conjunctivitis.png")
+plot(monitored_conjunctivitis_C1)
+dev.off()
+######################################EARSC1--influenza############################################
+#Function ears takes an sts and a control object as arguments
+monitored_respiratory_infection_C1 <- earsC(respiratoryinfection,
+                                  control = list(
+                                                 method = "C1",
+                                                 alpha = 0.001,
+                                                 baseline = 3))
+png(file="C:/Users/zafiirah/PycharmProjects/flaskBootstrap/flask_boot/static/img/respiratoryinfection.png")
+png("respiratoryinfection.png")
+plot(monitored_respiratory_infection_C1)
+dev.off()
