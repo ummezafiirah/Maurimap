@@ -24,11 +24,10 @@ import pymongo
 
 
 # Variables that contains the user credentials to access Twitter API
-ACCESS_TOKEN = ''
-ACCESS_SECRET = ''
-CONSUMER_KEY = ''
-CONSUMER_SECRET = ''
-
+ACCESS_TOKEN = '1041265000659054592-TO9lxogdVoHRlYWxcHFqa52PTJe9nA'
+ACCESS_SECRET = 'O3wOOdyPxABUkfvSd1CQMBZFZ3DVAUTh0ihfhsw2QuqvW'
+CONSUMER_KEY = 'k2UjjnOtpDGRoWyjYNcJJo1rw'
+CONSUMER_SECRET = '3HcN7u1Jd0Gdb5iPuH8goyZ7LHzWyxCvhbFonTI82ntag6uApS'
 # Setup tweepy to authenticate with Twitter credentials:
 
 auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
@@ -52,14 +51,15 @@ for status in tweepy.Cursor(api.search,q=query\
              ,count=100).items():
      #print(status.geo)
      #print (status.created_at)
-     #print("Tweet Text:"+status.text)
+     print("Tweet Text:"+status.text)
+     print(status.geo)
      #print("Tweet place:"+status.place.name if status.place else "Undefined place")
 
      # if location(coordinates) are available >>search for location in tweet
      if (status.geo is None):
-         location_result = text_analysetwitter.extract_location(status.text.lower() ,60)
-         dis = text_analysetwitter.extract_disease(status.text, 60)
-
+         print("geography is None")
+         location_result = text_analysetwitter.extract_location(status.text.lower() ,90)
+         dis = text_analysetwitter.extract_disease(status.text.lower(), 60)
 
          #replacing punctuations with whitespace for location_result
          for char in string.punctuation:
@@ -73,6 +73,12 @@ for status in tweepy.Cursor(api.search,q=query\
          #condition to discard tweets with no location mentionned in it
          if locresult != "":
             #example output: return value('dizziness', 100),influenza
+            print("Location found in tweet!!!")
+            print("location")
+            print(location_result)
+            print("disease")
+            print(dis)
+            print(locresult)
             a,b,c= dis.split(',',3)
             #('dizziness'
             #print(a)
@@ -88,7 +94,6 @@ for status in tweepy.Cursor(api.search,q=query\
             #print(location.address)
             #print((location.latitude, location.longitude))
             date = str(status.created_at.date())
-            print(date)
             # if (mycol.find_one({"date": status.created_at,"Tweet": status.text}) is None):
              #insertinMongoDBCloud
             #,"location":(location.address)
@@ -98,8 +103,26 @@ for status in tweepy.Cursor(api.search,q=query\
             ##save_data(myList, 'twitter')
             ##x = mycol.insert_one(mylist)
 
+         if locresult == "":
+             print("Location not found in tweet!!!")
+             print("location")
+             print(location_result)
+             print("disease")
+             print(dis)
+             a, b, c = dis.split(',', 3)
+             disease = c
+             date = str(status.created_at.date())
+             print(date)
+             latitude = "not found"
+             longitude = "not found"
+             mylist = {"diseasetype": (disease), "date": (date), "Tweet": (status.text),
+                       "latitude": (latitude), "longitude": (longitude)}
+             connect_db.save_tweet(mylist)
+
+
      #if location(coordinates) are available
      else:
+             print("geography is Available")
         # if (mycol.find_one({"date": status.created_at, "Tweet": status.text}) is None):
              # insertinMongoDB
              dis = text_analysetwitter.extract_disease(status.text.lower(), 60)
@@ -138,4 +161,3 @@ for status in tweepy.Cursor(api.search,q=query\
 
              ##for Local Mongo db
              # x = mycol.insert_one(mylist)
-
