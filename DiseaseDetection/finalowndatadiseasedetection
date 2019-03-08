@@ -6,12 +6,15 @@
 # Objective : TODO
 # Created by: zafiirah
 # Created on: 1/17/2019
-#print(.libPaths())
+print(.libPaths())
+library(mongolite)
+
 ##packages: spc
 library(readr)
 library(kableExtra)
+library(gridExtra)
 diseases <- readr::read_csv("C:/Users/zafiirah/Desktop/AC level 3/FYP/allData.csv")
-print(knitr::kable(head(diseases)))
+#print(knitr::kable(head(diseases)))
 
 #function to convert data about specific disease in sts class
 #A surveillance time series {yit;t = 1, . . . , n, i = 1, . . . , m} is
@@ -70,46 +73,102 @@ respiratoryinfection <- diseases_sts(disease = "respiratory infection", data = d
 library("ggplot2")
 ######################################EARSC1--influenza############################################
 #Function ears takes an sts and a control object as arguments
+mycollection = "analysedData_influenza"
+mydb = "test2"
+mongo<- mongo(collection = mycollection, db = mydb, url = "", verbose = TRUE)
 monitored_influenza_C1 <- earsC(influenza,
                                   control = list(
                                                  method = "C1",
                                                  alpha = 0.001,
                                                  baseline = 3))
-png(file="C:/Users/zafiirah/PycharmProjects/flaskBootstrap/flask_boot/static/img/influenza.png")
+#png(file="C:/Users/zafiirah/PycharmProjects/flaskBootstrap/flask_boot/static/img/influenza.png")
 png("influenza.png")
 plot(monitored_influenza_C1)
 dev.off()
+
+monitored_influenza_df <- as.data.frame(monitored_influenza_C1)
+knitr::kable(monitored_influenza_df)
+for (row in 1:nrow(monitored_influenza_df)) {
+  observed <- paste('"',monitored_influenza_df[row, "observed"],'"')
+  epoch <- paste('"',monitored_influenza_df[row, "epoch"],'"')
+  alarm <- paste('"',monitored_influenza_df[row, "alarm"],'"')
+  #print(paste(observed,epoch,alarm))
+  #mongo$update('{"observed" : observed}','{"$set":{"epoch": epoch,"alarm": alarm}}', upsert=TRUE)
+  mongo$update(paste('{"epoch" :', epoch,'}'),paste('{"$set":{"observed":',observed,',"alarm":',alarm,'}}'), upsert=TRUE)
+}
 ######################################EARSC1--gastroenteritis############################################
 #Function ears takes an sts and a control object as arguments
-
+mycollection = "analysedData_gastroenteritis"
+mydb = "test2"
+mongo<- mongo(collection = mycollection, db = mydb, url = "", verbose = TRUE)
 monitored_gastroenteritis_C1 <- earsC(gastroenteritis,
                               control = list(
                                 method = "C1",
                                 alpha = 0.001,
                                 baseline = 3))
 png(file="C:/Users/zafiirah/PycharmProjects/flaskBootstrap/flask_boot/static/img/gastro.png")
-png("gastro.png")
+#png("gastro.png")
 plot(monitored_gastroenteritis_C1)
 dev.off()
+
+monitored_gastroenteritis_df <- as.data.frame(monitored_gastroenteritis_C1)
+knitr::kable(monitored_gastroenteritis_df)
+for (row in 1:nrow(monitored_gastroenteritis_df)) {
+  observed <- paste('"',monitored_gastroenteritis_df[row, "observed"],'"')
+  epoch <- paste('"',monitored_gastroenteritis_df[row, "epoch"],'"')
+  alarm <- paste('"',monitored_gastroenteritis_df[row, "alarm"],'"')
+  #print(paste(observed,epoch,alarm))
+  #mongo$update('{"observed" : observed}','{"$set":{"epoch": epoch,"alarm": alarm}}', upsert=TRUE)
+  mongo$update(paste('{"epoch" :', epoch,'}'),paste('{"$set":{"observed":',observed,',"alarm":',alarm,'}}'), upsert=TRUE)
+}
+
 ######################################EARSC1--conjunctivitis############################################
 #Function ears takes an sts and a control object as arguments
+mycollection = "analysedData_conjunctivitis"
+mydb = "test2"
+mongo<- mongo(collection = mycollection, db = mydb, url = "", verbose = TRUE)
 monitored_conjunctivitis_C1 <- earsC(conjunctivitis,
                                   control = list(
                                                  method = "C1",
                                                  alpha = 0.001,
                                                  baseline = 3))
 png(file="C:/Users/zafiirah/PycharmProjects/flaskBootstrap/flask_boot/static/img/conjunctivitis.png")
-png("conjunctivitis.png")
+#png("conjunctivitis.png")
 plot(monitored_conjunctivitis_C1)
 dev.off()
-######################################EARSC1--influenza############################################
+
+monitored_conjunctivitis_df <- as.data.frame(monitored_conjunctivitis_C1)
+knitr::kable(monitored_conjunctivitis_df)
+for (row in 1:nrow(monitored_conjunctivitis_df)) {
+  observed <- paste('"',monitored_conjunctivitis_df[row, "observed"],'"')
+  epoch <- paste('"',monitored_conjunctivitis_df[row, "epoch"],'"')
+  alarm <- paste('"',monitored_conjunctivitis_df[row, "alarm"],'"')
+  #print(paste(observed,epoch,alarm))
+  #mongo$update('{"observed" : observed}','{"$set":{"epoch": epoch,"alarm": alarm}}', upsert=TRUE)
+  mongo$update(paste('{"epoch" :', epoch,'}'),paste('{"$set":{"observed":',observed,',"alarm":',alarm,'}}'), upsert=TRUE)
+}
+######################################EARSC1--respiratoryinfection############################################
 #Function ears takes an sts and a control object as arguments
+mycollection = "analysedData_respiratory"
+mydb = "test2"
+mongo<- mongo(collection = mycollection, db = mydb, url = "", verbose = TRUE)
 monitored_respiratory_infection_C1 <- earsC(respiratoryinfection,
                                   control = list(
                                                  method = "C1",
                                                  alpha = 0.001,
                                                  baseline = 3))
 png(file="C:/Users/zafiirah/PycharmProjects/flaskBootstrap/flask_boot/static/img/respiratoryinfection.png")
-png("respiratoryinfection.png")
+#png("respiratoryinfection.png")
 plot(monitored_respiratory_infection_C1)
 dev.off()
+
+monitored_respiratory_infection_df <- as.data.frame(monitored_respiratory_infection_C1)
+knitr::kable(monitored_respiratory_infection_df)
+for (row in 1:nrow(monitored_respiratory_infection_df)) {
+  observed <- paste('"',monitored_respiratory_infection_df[row, "observed"],'"')
+  epoch <- paste('"',monitored_respiratory_infection_df[row, "epoch"],'"')
+  alarm <- paste('"',monitored_respiratory_infection_df[row, "alarm"],'"')
+  #print(paste(observed,epoch,alarm))
+  #mongo$update('{"observed" : observed}','{"$set":{"epoch": epoch,"alarm": alarm}}', upsert=TRUE)
+  mongo$update(paste('{"epoch" :', epoch,'}'),paste('{"$set":{"observed":',observed,',"alarm":',alarm,'}}'), upsert=TRUE)
+}
