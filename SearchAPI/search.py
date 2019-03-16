@@ -24,10 +24,10 @@ import pymongo
 
 
 # Variables that contains the user credentials to access Twitter API
-ACCESS_TOKEN = '1041265000659054592-TO9lxogdVoHRlYWxcHFqa52PTJe9nA'
-ACCESS_SECRET = 'O3wOOdyPxABUkfvSd1CQMBZFZ3DVAUTh0ihfhsw2QuqvW'
-CONSUMER_KEY = 'k2UjjnOtpDGRoWyjYNcJJo1rw'
-CONSUMER_SECRET = '3HcN7u1Jd0Gdb5iPuH8goyZ7LHzWyxCvhbFonTI82ntag6uApS'
+ACCESS_TOKEN = ''
+ACCESS_SECRET = ''
+CONSUMER_KEY = ''
+CONSUMER_SECRET = ''
 # Setup tweepy to authenticate with Twitter credentials:
 
 auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
@@ -128,10 +128,8 @@ for status in tweepy.Cursor(api.search,q=query\
              dis = text_analysetwitter.extract_disease(status.text.lower(), 60)
         # replacing punctuations with whitespace for location_result
              for char in string.punctuation:
-                s = location_result.replace(char, ' ')
                 s1 = dis.replace(char, ' ')
                 # removing numbers from s
-                locresult = ''.join([i for i in s if not i.isdigit()])
                 disresult = ''.join([i for i in s1 if not i.isdigit()])
 
              # example output: return value('dizziness', 100),influenza
