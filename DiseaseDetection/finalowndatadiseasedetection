@@ -6,13 +6,16 @@
 # Objective : TODO
 # Created by: zafiirah
 # Created on: 1/17/2019
-print(.libPaths())
+#print(.libPaths())
 library(mongolite)
 
 ##packages: spc
 library(readr)
 library(kableExtra)
 library(gridExtra)
+mycollection = "analysedData"
+mydb = "test2"
+mongo<- mongo(collection = mycollection, db = mydb, url = "mongodb+srv://fyp_admin:fyp_pwd@cluster0-oov30.mongodb.net/test?retryWrites=true", verbose = TRUE)
 diseases <- readr::read_csv("C:/Users/zafiirah/Desktop/AC level 3/FYP/allData.csv")
 #print(knitr::kable(head(diseases)))
 
@@ -64,18 +67,16 @@ diseases_sts <- function(disease, data){
 
 
 library(surveillance)
-library(surveillance)
-influenza <- diseases_sts(disease = "influenza", data = diseases)
-gastroenteritis <- diseases_sts(disease = "gastroenteritis", data = diseases)
-conjunctivitis <- diseases_sts(disease = "conjunctivitis", data = diseases)
-respiratoryinfection <- diseases_sts(disease = "respiratory infection", data = diseases)
+
+#influenza <- diseases_sts(disease = "influenza", data = diseases)
+#gastroenteritis <- diseases_sts(disease = "gastroenteritis", data = diseases)
+#conjunctivitis <- diseases_sts(disease = "conjunctivitis", data = diseases)
+#respiratoryinfection <- diseases_sts(disease = "respiratory infection", data = diseases)
 
 library("ggplot2")
 ######################################EARSC1--influenza############################################
 #Function ears takes an sts and a control object as arguments
-mycollection = "analysedData_influenza"
-mydb = "test2"
-mongo<- mongo(collection = mycollection, db = mydb, url = "", verbose = TRUE)
+influenza <- diseases_sts(disease = "influenza", data = diseases)
 monitored_influenza_C1 <- earsC(influenza,
                                   control = list(
                                                  method = "C1",
@@ -88,19 +89,25 @@ dev.off()
 
 monitored_influenza_df <- as.data.frame(monitored_influenza_C1)
 knitr::kable(monitored_influenza_df)
+knitr::kable(monitored_influenza_df)
 for (row in 1:nrow(monitored_influenza_df)) {
   observed <- paste('"',monitored_influenza_df[row, "observed"],'"')
   epoch <- paste('"',monitored_influenza_df[row, "epoch"],'"')
   alarm <- paste('"',monitored_influenza_df[row, "alarm"],'"')
   #print(paste(observed,epoch,alarm))
   #mongo$update('{"observed" : observed}','{"$set":{"epoch": epoch,"alarm": alarm}}', upsert=TRUE)
-  mongo$update(paste('{"epoch" :', epoch,'}'),paste('{"$set":{"observed":',observed,',"alarm":',alarm,'}}'), upsert=TRUE)
+
+    #mongo$update(paste('{"epoch" :', epoch,'}'),paste('{"$set":{"observed":',observed,',"alarm":',alarm,'}}'), upsert=TRUE)
+    disease<-('"influenza"')
+    mongo$update(paste('{"epoch" :', epoch,'}'),paste('{"$set":{"observed":',observed,',"alarm":',alarm,',"disease":',disease,'}}'), upsert=TRUE)
 }
+print("influenza done")
+
+
+
 ######################################EARSC1--gastroenteritis############################################
 #Function ears takes an sts and a control object as arguments
-mycollection = "analysedData_gastroenteritis"
-mydb = "test2"
-mongo<- mongo(collection = mycollection, db = mydb, url = "", verbose = TRUE)
+gastroenteritis <- diseases_sts(disease = "gastroenteritis", data = diseases)
 monitored_gastroenteritis_C1 <- earsC(gastroenteritis,
                               control = list(
                                 method = "C1",
@@ -119,14 +126,17 @@ for (row in 1:nrow(monitored_gastroenteritis_df)) {
   alarm <- paste('"',monitored_gastroenteritis_df[row, "alarm"],'"')
   #print(paste(observed,epoch,alarm))
   #mongo$update('{"observed" : observed}','{"$set":{"epoch": epoch,"alarm": alarm}}', upsert=TRUE)
-  mongo$update(paste('{"epoch" :', epoch,'}'),paste('{"$set":{"observed":',observed,',"alarm":',alarm,'}}'), upsert=TRUE)
+  #mongo$update(paste('{"epoch" :', epoch,'}'),paste('{"$set":{"observed":',observed,',"alarm":',alarm,'}}'), upsert=TRUE)
+     disease<-('"gastroenteritis"')
+    mongo$update(paste('{"epoch" :', epoch,'}'),paste('{"$set":{"observed":',observed,',"alarm":',alarm,',"disease":',disease,'}}'), upsert=TRUE)
 }
+print("gastroenteritis done")
+
+
 
 ######################################EARSC1--conjunctivitis############################################
 #Function ears takes an sts and a control object as arguments
-mycollection = "analysedData_conjunctivitis"
-mydb = "test2"
-mongo<- mongo(collection = mycollection, db = mydb, url = "", verbose = TRUE)
+conjunctivitis <- diseases_sts(disease = "conjunctivitis", data = diseases)
 monitored_conjunctivitis_C1 <- earsC(conjunctivitis,
                                   control = list(
                                                  method = "C1",
@@ -145,13 +155,17 @@ for (row in 1:nrow(monitored_conjunctivitis_df)) {
   alarm <- paste('"',monitored_conjunctivitis_df[row, "alarm"],'"')
   #print(paste(observed,epoch,alarm))
   #mongo$update('{"observed" : observed}','{"$set":{"epoch": epoch,"alarm": alarm}}', upsert=TRUE)
-  mongo$update(paste('{"epoch" :', epoch,'}'),paste('{"$set":{"observed":',observed,',"alarm":',alarm,'}}'), upsert=TRUE)
+  #mongo$update(paste('{"epoch" :', epoch,'}'),paste('{"$set":{"observed":',observed,',"alarm":',alarm,'}}'), upsert=TRUE)
+     disease<-('"conjunctivitis"')
+    mongo$update(paste('{"epoch" :', epoch,'}'),paste('{"$set":{"observed":',observed,',"alarm":',alarm,',"disease":',disease,'}}'), upsert=TRUE)
 }
+print("conjunctivitis done")
+
+
+
 ######################################EARSC1--respiratoryinfection############################################
 #Function ears takes an sts and a control object as arguments
-mycollection = "analysedData_respiratory"
-mydb = "test2"
-mongo<- mongo(collection = mycollection, db = mydb, url = "", verbose = TRUE)
+respiratoryinfection <- diseases_sts(disease = "respiratory infection", data = diseases)
 monitored_respiratory_infection_C1 <- earsC(respiratoryinfection,
                                   control = list(
                                                  method = "C1",
@@ -170,5 +184,27 @@ for (row in 1:nrow(monitored_respiratory_infection_df)) {
   alarm <- paste('"',monitored_respiratory_infection_df[row, "alarm"],'"')
   #print(paste(observed,epoch,alarm))
   #mongo$update('{"observed" : observed}','{"$set":{"epoch": epoch,"alarm": alarm}}', upsert=TRUE)
-  mongo$update(paste('{"epoch" :', epoch,'}'),paste('{"$set":{"observed":',observed,',"alarm":',alarm,'}}'), upsert=TRUE)
+  #mongo$update(paste('{"epoch" :', epoch,'}'),paste('{"$set":{"observed":',observed,',"alarm":',alarm,'}}'), upsert=TRUE)
+     disease<-('"respiratory infection"')
+    mongo$update(paste('{"epoch" :', epoch,'}'),paste('{"$set":{"observed":',observed,',"alarm":',alarm,',"disease":',disease,'}}'), upsert=TRUE)
 }
+print("respiratoryinfection done")
+
+
+influenzasum <- sum(monitored_influenza_df$observed)
+print(influenzasum)
+gastrosum <- sum(monitored_gastroenteritis_df$observed)
+print(gastrosum)
+conjunctsum <- sum(monitored_conjunctivitis_df$observed)
+print(conjunctsum)
+respiratorysum <- sum(monitored_respiratory_infection_df$observed)
+print(respiratorysum)
+
+mycollection = "totalData"
+mydb = "test2"
+mongo<- mongo(collection = mycollection, db = mydb, url = "mongodb+srv://fyp_admin:fyp_pwd@cluster0-oov30.mongodb.net/test?retryWrites=true", verbose = TRUE
+)
+mongo$update(paste('{"epoch" :', '"influenza"','}'),paste('{"$set":{"numCases":',influenzasum,'}}'), upsert=TRUE)
+mongo$update(paste('{"epoch" :', '"gastroenteritis"','}'),paste('{"$set":{"numCases":',gastrosum,'}}'), upsert=TRUE)
+mongo$update(paste('{"epoch" :', '"conjunctivitis"','}'),paste('{"$set":{"numCases":',conjunctsum,'}}'), upsert=TRUE)
+mongo$update(paste('{"epoch" :', '"respiratoryinfection"','}'),paste('{"$set":{"numCases":',respiratorysum,'}}'), upsert=TRUE)
