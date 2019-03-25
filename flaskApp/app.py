@@ -49,7 +49,8 @@ def search():
                 return render_template('search.html', myvalue=data, disease=search_value, disease_header="DISEASE",epoch_header="EPOCH",observed_header="OBSERVED",alarm_header="ALARM")
     else:
         data = retrieve_ALLanalysedData(db.analysedData)
-        return render_template('search.html', myvalue=data, disease_header="DISEASE",epoch_header="EPOCH",observed_header="OBSERVED",alarm_header="ALARM")
+        totdisease,influenza,gastro,conjunc,respiratory = retrieve_ALLnumCases()
+        return render_template('search.html', myvalue=data, disease_header="DISEASE",epoch_header="EPOCH",observed_header="OBSERVED",alarm_header="ALARM",totcases=totdisease,cases_influenza=influenza,cases_gastro=gastro,cases_conjunc=conjunc,cases_respi=respiratory)
 
 def retrieve_analysedData(diseaseDB,value):
     collection = diseaseDB
@@ -67,6 +68,18 @@ def retrieve_CountData(diseaseDB,value):
     collection = diseaseDB
     item_count = collection.count_documents({"disease": value})
     return item_count
+
+def retrieve_ALLnumCases():
+    client = pymongo.MongoClient(DB_URI)
+    db = client.test2
+    collection = db.totalData
+    #input_analysedData = collection.find({})
+    totDisease = collection.find({"disease": "All_diseases"})
+    totinfluenza = collection.find({ "disease" : "influenza" })
+    totgastro = collection.find({"disease": "gastroenteritis"})
+    totconjunc = collection.find({"disease": "conjunctivitis"})
+    totRespiratory = collection.find({"disease": "respiratoryinfection"})
+    return totDisease,totinfluenza,totgastro,totconjunc,totRespiratory
 
 
 if __name__ =='__main__':
