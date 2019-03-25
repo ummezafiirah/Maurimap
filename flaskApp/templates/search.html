@@ -154,6 +154,8 @@
                 <button type="submit"><i class="fa fa-search"></i></button>
             </form>
 
+
+
             <!-- row -->
             <div class="row tm-content-row">
                 <div class="col-12 tm-block-col">
@@ -184,11 +186,50 @@
                         </table>
 
 
-
-
                     </div>
                 </div>
             </div>
+            <div class="container">
+  <div class="row">
+      <div class="p-3 mb-2 bg-dark text-white w-100 h-100"><h3 style="text-align:left;float:left;">Total Number of Cases</h3>
+
+{% for item in totcases %}
+                <h3 style="text-align:right;float:right;">{{item.numCases}}</h3>
+{% endfor %}
+
+      </div>
+      <div class="w-100"></div>
+      <div class="p-3 mb-2 bg-primary text-white w-50 h-100"><p><h5 style="text-align: center;">Influenza</h5></p>
+            {% for item in cases_influenza %}
+                <p style="text-align: center;">{{item.numCases}}</p>
+            {% endfor %}
+      </div>
+      <div class="p-3 mb-2 bg-success text-white w-50 h-100"><p><h5 style="text-align: center;">Gastroenteritis</h5></p>
+
+              {% for item in cases_gastro %}
+                <p style="text-align: center;">{{item.numCases}}</p>
+            {% endfor %}
+
+      </div>
+
+      <div class="w-100"></div>
+      <div class="p-3 mb-2 bg-danger text-white w-50 h-100 d-inline-block"><p><h5  style="text-align: center;">Conjuctivitis</h5></p>
+
+              {% for item in cases_conjunc %}
+               <p style="text-align: center;">{{item.numCases}}</p>
+            {% endfor %}
+
+      </div>
+      <div class="p-3 mb-2 bg-info text-white w-50 h-100 d-inline-block"><p><h5  style="text-align: center;">Respiratory Infection</h5></p>
+
+              {% for item in cases_respi %}
+                <p style="text-align: center;">{{item.numCases}}</p>
+            {% endfor %}
+
+      </div>
+      <div class="w-100"></div>
+  </div>
+</div>
         </div>
         <footer class="tm-footer row tm-mt-small">
             <div class="col-12 font-weight-light">
