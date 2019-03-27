@@ -26,10 +26,10 @@ import pymongo
 
 
 # Variables that contains the user credentials to access Twitter API
-ACCESS_TOKEN = ''
-ACCESS_SECRET = ''
-CONSUMER_KEY = ''
-CONSUMER_SECRET = ''
+ACCESS_TOKEN = '1041265000659054592-L00DvaSD5EDWdQsEv8pSgg3ha1YOEs'
+ACCESS_SECRET = 'sM1SIyHRMs1IrqksMT6IOB8eSE4ApA7BNcBoK7DZWm2dk'
+CONSUMER_KEY = 'lYtWk9zDUTG5iohmJnAhGaLBz'
+CONSUMER_SECRET = 'RChpOgv4lUwxryUtflUgWZgzedoL3uv5ezK6CJx6ZfSkyPDTj5'
 
 # Setup tweepy to authenticate with Twitter credentials:
 auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
@@ -53,50 +53,31 @@ for status in tweepy.Cursor(api.search,q=query\
      # if location(coordinates) are available >>search for location in tweet
      if (status.geo is None):
          print("geography is None")
+
+
          location_result = text_analysetwitter.extract_location(status.text.lower() ,90)
          dis = text_analysetwitter.extract_disease(status.text.lower(), 60)
 
-         #replacing punctuations with whitespace for location_result
+         #replacing punctuations with whitespace for location_result and tweet
          for char in string.punctuation:
             s = location_result.replace(char, ' ')
             s1 = dis.replace(char, ' ')
-         #removing numbers from s
+         #removing numbers from location_result and tweet
          locresult = ''.join([i for i in s if not i.isdigit()])
          disresult = ''.join([i for i in s1 if not i.isdigit()])
-         #print("disease removing special characters:"+re.sub('[^A-Za-z0-9]+', '', disresult))
 
-         #condition to discard tweets with no location mentionned in it
+         #location mentionned in tweet
          if locresult != "":
-            #example output: return value('dizziness', 100),influenza
-            print("Location found in tweet!!!")
-            print("location")
-            print(location_result)
-            print("disease")
-            print(dis)
-            print(locresult)
-            a,b,c= dis.split(',',3)
-            #('dizziness'
-            #print(a)
-            #100)
-            #print(b)
-            #influenza
-            print("Disease:" + c)
-            disease = c
-
+            values = dis.split(',')
+            disease = values[-1]
+            #get latitude and longitude of mentionned location in tweet using Nominatim
             location = geolocator.geocode(locresult+", Mauritius")
             lat = location.latitude
             long = location.longitude
-            #print(location.address)
-            #print((location.latitude, location.longitude))
             date = str(status.created_at.date())
-            # if (mycol.find_one({"date": status.created_at,"Tweet": status.text}) is None):
-             #insertinMongoDBCloud
-            #,"location":(location.address)
+            #inserting in MongoDB Cloud
             mylist = { "diseasetype":(disease),"date":(date),"Tweet": (status.text), "latitude":(location.latitude), "longitude":(location.longitude)}
             connect_db.save_tweet(mylist)
-            ##for Local Mongo db
-            ##save_data(myList, 'twitter')
-            ##x = mycol.insert_one(mylist)
 
          if locresult == "":
              print("Location not found in tweet!!!")
@@ -104,8 +85,8 @@ for status in tweepy.Cursor(api.search,q=query\
              print(location_result)
              print("disease")
              print(dis)
-             a, b, c = dis.split(',', 3)
-             disease = c
+             values = dis.split(',')
+             disease = values[-1]
              date = str(status.created_at.date())
              print(date)
              latitude = "not found"
@@ -131,15 +112,13 @@ for status in tweepy.Cursor(api.search,q=query\
              # example output: return value('dizziness', 100),influenza
              #a, b, c = dis.split(',', 3)
              values = dis.split(',')
-             c= values[-1]
+             disease = values[-1]
 
              # ('dizziness'
              #print(a)
              # 100)
              #print(b)
              # influenza
-
-             disease = c
 
              geo = status.geo.get("coordinates")
              lat = geo[0]
