@@ -1,6 +1,8 @@
 from geopy.geocoders import Nominatim
 from analysis import text_analysetwitter
 import string
+import warnings
+warnings.filterwarnings("ignore")
 import pymongo
 import re
 import datetime
@@ -28,16 +30,11 @@ ACCESS_TOKEN = ''
 ACCESS_SECRET = ''
 CONSUMER_KEY = ''
 CONSUMER_SECRET = ''
-# Setup tweepy to authenticate with Twitter credentials:
 
+# Setup tweepy to authenticate with Twitter credentials:
 auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
 auth.set_access_token(ACCESS_TOKEN, ACCESS_SECRET)
 api = tweepy.API(auth,wait_on_rate_limit=True)
-#####United Airlines
-# Open/Create a file to append data
-#csvFile = open('ua.csv', 'a')
-#Use csv Writer
-#csvWriter = csv.writer(csvFile)
 
 #keywords to find in tweets
 query = 'place:ee9d992aa12a6fa0  flu OR influenza OR coughing OR cough ' \
@@ -49,11 +46,9 @@ query = 'place:ee9d992aa12a6fa0  flu OR influenza OR coughing OR cough ' \
 
 for status in tweepy.Cursor(api.search,q=query\
              ,count=100).items():
+
+     #print("Tweet Text:"+status.text)
      #print(status.geo)
-     #print (status.created_at)
-     print("Tweet Text:"+status.text)
-     print(status.geo)
-     #print("Tweet place:"+status.place.name if status.place else "Undefined place")
 
      # if location(coordinates) are available >>search for location in tweet
      if (status.geo is None):
@@ -122,10 +117,11 @@ for status in tweepy.Cursor(api.search,q=query\
 
      #if location(coordinates) are available
      else:
-             print("geography is Available")
+             #print("geography is Available")
         # if (mycol.find_one({"date": status.created_at, "Tweet": status.text}) is None):
              # insertinMongoDB
              dis = text_analysetwitter.extract_disease(status.text.lower(), 60)
+             #print(dis)
         # replacing punctuations with whitespace for location_result
              for char in string.punctuation:
                 s1 = dis.replace(char, ' ')
@@ -133,13 +129,16 @@ for status in tweepy.Cursor(api.search,q=query\
                 disresult = ''.join([i for i in s1 if not i.isdigit()])
 
              # example output: return value('dizziness', 100),influenza
-             a, b, c = dis.split(',', 3)
+             #a, b, c = dis.split(',', 3)
+             values = dis.split(',')
+             c= values[-1]
+
              # ('dizziness'
              #print(a)
              # 100)
              #print(b)
              # influenza
-             print("Disease:" + c)
+
              disease = c
 
              geo = status.geo.get("coordinates")
@@ -149,10 +148,23 @@ for status in tweepy.Cursor(api.search,q=query\
              ##print(coordinates)
              location = geolocator.reverse(coordinates)
              ##print(location)
+
+
              date = str(status.created_at.date())
-             print(date)
              ##reverse
              location = geolocator.reverse(coordinates)
+
+
+             #LOCATION COORDINATES ARE AVAILABLE
+             print("DISEASE:")
+             print(disease)
+             print("TWEET:")
+             print(status.text)
+             print("DATE:")
+             print(date)
+             print("COORDINATES:")
+             print(geo)
+
              mylist = {"diseasetype":(disease),"date": (date), "Tweet": (status.text),
                        "latitude": (lat), "longitude": (long)}
              connect_db.save_tweet(mylist)
