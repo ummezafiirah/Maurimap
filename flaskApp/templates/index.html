@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Infectious Disease Surveillance</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <!-- https://fonts.google.com/specimen/Roboto -->
+    <link rel="stylesheet" href="{{url_for('static', filename='css/fontawesome.min.css')}}">
+    <!-- https://fontawesome.com/ -->
+    <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.min.css')}}">
+    <!-- https://getbootstrap.com/ -->
+    <link rel="stylesheet" href="{{url_for('static', filename='css/templatemo-style.css')}}">
+    <!--
+	Product Admin CSS Template
+	https://templatemo.com/tm-524-product-admin
+	-->
+    <style>
+    #animateLogo{
+       padding-top: 55px;
+    }
+    #animateLogo>img{
+    display: none;
+    border-radius: 72px;
+    -webkit-border-radius: 72px;
+    -moz-border-radius: 72px;
+    border-style: solid;
+    border-width: 6px;
+    border-color: #f5a623;
+    width: 150;
+    height: 150;
+        }
+    #animateLogo>img:first-child {
+        display: block;
+    }
+    #logoText{
+        float: left;
+        padding: 5px;
+    }
+
+    </style>
+</head>
+
+<body id="reportsPage">
+    <div class="" id="home">
+        <nav class="navbar navbar-expand-xl">
+            <div class="container h-100">
+                <!--<a class="navbar-brand" href="index.html">
+                <figure class="icon-container">
+    			<img src="{{url_for('static', filename='img/icon.png')}}" width="100" height="100" align="center" />
+    			<figcaption class="icon-text"><h1 class="tm-site-title mb-0">Infectious Disease Surveillance</h1></figcaption>
+				</figure>
+
+                </a>-->
+                <!--<a class="navbar-brand" href="#">
+                	<img src="{{url_for('static', filename='img/icon-trans.png')}}" alt="Dispute Bills" class="rotate">
+        </a>-->
+        <div id="animateLogo">
+            <img src="{{url_for('static', filename='img/4.png')}}" width="150" height="150" />
+            <img src="{{url_for('static', filename='img/3.png')}}" width="150" height="150"/>
+            <img src="{{url_for('static', filename='img/2.png')}}" width="150" height="150"/>
+            <img src="{{url_for('static', filename='img/1.png')}}"  width="150" height="150"/>
+        </div>
+
+        <div id="logoText">
+            <img src="{{url_for('static',filename='img/iconText2.png')}}" width="200" height="200" />
+        </div>
+
+
+
+                <button class="navbar-toggler ml-auto mr-0" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fas fa-bars tm-nav-icon"></i>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mx-auto h-100">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">
+                                <i class="fas fa-home"></i>
+                                Home
+                                <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-chart-line"></i>
+                                <span>
+                                    Disease analytics <i class="fas fa-angle-down"></i>
+                                </span>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ url_for('detect') }}">Disease Detection</a>
+                                <a class="dropdown-item" href="{{ url_for('detect') }}">Disease Prediction</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('accounts') }}">
+                                <i class="fas fa-map-marked-alt"></i>
+                                Live map
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('search') }}">
+                                <i class="fas fa-search"></i>
+                                Search
+                            </a>
+                        </li>
+						
+						<!------------------------------------LANGUAGE TRANSLATE------------------------------------------------>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                               <!-- <i class="fas fa-cog"></i>  -->
+                                <span id='MicrosoftTranslatorWidget' class='Dark' style='color:white;background-color:#555555'>
+                                    <i class="fas fa-angle-down"></i>
+                                </span>
+                            </a>
+
+                        </li>
+						<!------------------------------------------------------------------------------------------------------>
+                    </ul>
+                    <!--
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link d-block" href="login.html">
+                                Admin, <b>Logout</b>
+                            </a>
+                        </li>
+                    </ul>-->
+                </div>
+            </div>
+
+        </nav>
+        <div class="container">
+            <div class="row">
+                <div class="col" style="text-align: center;">
+                    <p class="text-white mt-5 mb-5"><h1 class="tm-site-title mb-0">Infectious Disease Surveillance System</h1><p class="text-white"><i>For Mauritius</i></p></p>
+                    <h1>HOME PAGE - NEWSPAPER ARTICLES</h1>
+                </div>
+            </div>
+            <!-- row -->
+
+        </div>
+        <footer class="tm-footer row tm-mt-small">
+            <div class="col-12 font-weight-light">
+                <p class="text-center text-white mb-0 px-4 small">
+                    Copyright &copy; <b>2019</b> All rights reserved.
+
+                    Design: <a rel="nofollow noopener" href="https://templatemo.com" class="tm-footer-link">Template Mo</a>
+                </p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="{{url_for('static', filename='js/jquery-3.3.1.min.js')}}"></script>
+    <!-- https://jquery.com/download/ -->
+    <script src="{{url_for('static', filename='js/moment.min.js')}}"></script>
+    <!-- https://momentjs.com/ -->
+    <script src="{{url_for('static', filename='js/Chart.min.js')}}"></script>
+    <!-- http://www.chartjs.org/docs/latest/ -->
+    <script src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
+    <!-- https://getbootstrap.com/ -->
+    <script src="{{url_for('static', filename='js/tooplate-scripts.js')}}"></script>
+    <script>
+       /* Chart.defaults.global.defaultFontColor = 'white';
+        let ctxLine,
+            ctxBar,
+            ctxPie,
+            optionsLine,
+            optionsBar,
+            optionsPie,
+            configLine,
+            configBar,
+            configPie,
+            lineChart;
+        barChart, pieChart;
+        // DOM is ready
+        $(function () {
+            drawLineChart(); // Line Chart
+            drawBarChart(); // Bar Chart
+            drawPieChart(); // Pie Chart
+
+            $(window).resize(function () {
+                updateLineChart();
+                updateBarChart();
+            });
+        })
+*/
+onload = function startAnimation(){
+
+            var frames = document.getElementById("animateLogo").children;
+            var frameCount = frames.length;
+            var i =0;
+
+
+            setInterval(function() {
+                frames[i % frameCount].style.display = "none";
+                frames[++i % frameCount].style.display = "block";
+            }, 1000);
+        }
+    </script>
+ <script src="{{url_for('static', filename='js/translate.js')}}"></script>
+</body>
+
+</html>
