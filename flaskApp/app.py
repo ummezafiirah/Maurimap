@@ -34,23 +34,23 @@ from rpy2.robjects import r, pandas2ri
 def search():
     client = pymongo.MongoClient(DB_URI)
     db = client.test2
-    if request.method == 'POST':
-            search_value = request.form['search'];
+  #  if request.method == 'POST':
+   #         search_value = request.form['search'];
             # search_value = request.form.get('search')
-            print(search_value)
+    #        print(search_value)
             # datainflu = connect_db.retrieve_analysedData_influenza("influenza")
-            data = retrieve_analysedData(db.analysedData,search_value)
+     #       data = retrieve_analysedData(db.analysedData,search_value)
             #print(data.count())
-            count = retrieve_CountData(db.analysedData,search_value)
-            print(count)
-            if (count==0):
-                return render_template('search.html', nodata="no results found")
-            else:
-                return render_template('search.html', myvalue=data, disease=search_value, disease_header="DISEASE",epoch_header="EPOCH",observed_header="OBSERVED",alarm_header="ALARM")
-    else:
-        data = retrieve_ALLanalysedData(db.analysedData)
-        totdisease,influenza,gastro,conjunc,respiratory = retrieve_ALLnumCases()
-        return render_template('search.html', myvalue=data, disease_header="DISEASE",epoch_header="EPOCH",observed_header="OBSERVED",alarm_header="ALARM",totcases=totdisease,cases_influenza=influenza,cases_gastro=gastro,cases_conjunc=conjunc,cases_respi=respiratory)
+      #      count = retrieve_CountData(db.analysedData,search_value)
+        #    print(count)
+       #     if (count==0):
+         #       return render_template('search.html', nodata="no results found")
+          #  else:
+           #     return render_template('search.html', myvalue=data, disease=search_value, disease_header="DISEASE",epoch_header="EPOCH",observed_header="OBSERVED",alarm_header="ALARM")
+    #else:
+    data = retrieve_ALLanalysedData(db.analysedData)
+    totdisease,influenza,gastro,conjunc,respiratory = retrieve_ALLnumCases()
+    return render_template('search.html', myvalue=data, disease_header="DISEASE",epoch_header="EPOCH",observed_header="OBSERVED",alarm_header="ALARM",totcases=totdisease,cases_influenza=influenza,cases_gastro=gastro,cases_conjunc=conjunc,cases_respi=respiratory)
 
 def retrieve_analysedData(diseaseDB,value):
     collection = diseaseDB
@@ -84,6 +84,10 @@ def retrieve_ALLnumCases():
 
 if __name__ =='__main__':
   app.run(debug=True)
+
+
+
+
 
 
 
