@@ -4,11 +4,10 @@ from fuzzywuzzy import process
 nltk.download('punkt')
 
 # DISEASE TERMS FROM TWITTER FOR FUZZY STRING MATCHING
-disease_influenza = ['influenza', 'flu', 'fever', 'fièvre','toux','éternuements','grippe','sneezing','dizziness','coughing','cough','vertiges']
-disease_conjunctivitis = ['conjunctivitis','conjonctivite', 'eyeitching', 'eyeswelling','eyetearing','pinkEye']
-disease_gastroenteritis = ['gastroenteritis', 'gastro', 'gastro-entérite', 'vomissement','vomiting','cramps','crampes','diarrhea','diarrhée']
-disease_respiratoryInfection = ['respiratoryInfection', 'infectionRespiratoire']
-
+disease_influenza = ['influenza', 'flu', 'fever', 'fièvre','toux','grippe','dizziness','coughing','cough','vertiges']
+disease_conjunctivitis = ['conjunctivitis','conjonctivite','pinkEye']
+disease_gastroenteritis = ['gastroenteritis', 'gastro', 'gastro-entérite', 'vomissement','vomiting','vomit','cramps','crampes','diarrhea','diarrhée']
+disease_respiratoryInfection = ['respiratory Infection', 'Infection Respiratoire']
 
 # LOCATION TERMS FOR FUZZY STRING MATCHING
 places_terms = ['port louis', 'beau bassin', 'rose hill', 'curepipe', 'quatre bornes', 'vacoas', 'phoenix',
