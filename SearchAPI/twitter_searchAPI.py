@@ -3,9 +3,7 @@ from analysis import text_analysetwitter
 import string
 import warnings
 warnings.filterwarnings("ignore")
-import pymongo
-import re
-import datetime
+
 #import connect_db to connect to cloud
 from seachAPI import connect_db
 geolocator = Nominatim(user_agent="my-application")
@@ -18,11 +16,6 @@ except ImportError:
 #Import the tweepy library
 import tweepy
 import pymongo
-
-#to connect to local mongo db
-#myclient = pymongo.MongoClient('mongodb://localhost:27017/')
-#db = myclient['twitter_db']
-#collection = db['twitter_collection']
 
 
 # Variables that contains the user credentials to access Twitter API
@@ -47,8 +40,6 @@ query = 'place:ee9d992aa12a6fa0  flu OR influenza OR coughing OR cough OR gastro
 for status in tweepy.Cursor(api.search,q=query\
              ,count=100).items():
 
-     #print("Tweet Text:"+status.text)
-     #print(status.geo)
 
      # if location(coordinates) are available >>search for location in tweet
      if (status.geo is None):
@@ -148,5 +139,4 @@ for status in tweepy.Cursor(api.search,q=query\
                        "latitude": (lat), "longitude": (long)}
              connect_db.save_tweet(mylist)
 
-             ##for Local Mongo db
-             # x = mycol.insert_one(mylist)
+           
