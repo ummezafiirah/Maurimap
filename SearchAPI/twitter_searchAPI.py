@@ -26,10 +26,10 @@ import pymongo
 
 
 # Variables that contains the user credentials to access Twitter API
-ACCESS_TOKEN = '1041265000659054592-L00DvaSD5EDWdQsEv8pSgg3ha1YOEs'
-ACCESS_SECRET = 'sM1SIyHRMs1IrqksMT6IOB8eSE4ApA7BNcBoK7DZWm2dk'
-CONSUMER_KEY = 'lYtWk9zDUTG5iohmJnAhGaLBz'
-CONSUMER_SECRET = 'RChpOgv4lUwxryUtflUgWZgzedoL3uv5ezK6CJx6ZfSkyPDTj5'
+ACCESS_TOKEN = ''
+ACCESS_SECRET = ''
+CONSUMER_KEY = ''
+CONSUMER_SECRET = ''
 
 # Setup tweepy to authenticate with Twitter credentials:
 auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
@@ -39,9 +39,9 @@ api = tweepy.API(auth,wait_on_rate_limit=True)
 #keywords to find in tweets
 query = 'place:ee9d992aa12a6fa0  flu OR influenza OR coughing OR cough ' \
         'OR gastro OR toux OR gastroenteritis OR diarrhea OR conjunctivitis' \
-        'éternuements OR sneezing OR conjonctivite OR pinkEye OR eyeswelling OR fièvre OR grippe OR eyeitching' \
+        'éternuements OR sneezing OR conjonctivite OR fièvre OR grippe OR vomiting' \
         'diarrhée OR vomissement OR vertiges OR cramps OR crampes OR dizziness' \
-        'fever OR vomiting OR eyetearing OR gastro-entérite OR respiratoryInfection OR infectionRespiratoire'
+        'fever OR gastro-entérite OR (pink AND eye) OR(respiratory AND Infection) OR (infection AND Respiratoire)'
 
 
 for status in tweepy.Cursor(api.search,q=query\
