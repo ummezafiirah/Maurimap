@@ -39,7 +39,7 @@ api = tweepy.API(auth,wait_on_rate_limit=True)
 #keywords to find in tweets
 query = 'place:ee9d992aa12a6fa0  flu OR influenza OR coughing OR cough OR gastro OR toux OR  \
         gastroenteritis OR diarrhea OR conjunctivitis OR \
-        éternuements OR sneezing OR conjonctivite OR fièvre OR grippe OR vomit OR \
+        conjonctivite OR fièvre OR grippe OR vomit OR \
         diarrhée OR vomissement OR vomiting OR vertiges OR cramps OR crampes OR dizziness OR \
         fever OR gastro-entérite OR (pink AND eye) OR(respiratory AND Infection) OR (infection AND Respiratoire)'
 
