@@ -12,6 +12,8 @@ def create_dict(records):
     #file in which to put all data
     csv_file_path = 'allData.csv'
     #a copy of allData.csv
+    name= os.path.splitext(csv_file_path)[0] + '.bak'
+    print(name)
     tempfilename = os.path.splitext(csv_file_path)[0] + '.bak'
     try:
         os.remove(tempfilename)  # delete any existing temp file
@@ -23,13 +25,18 @@ def create_dict(records):
 
     for record in records:
         #print(record)
-        headers = ['id', 'diseasetype', 'date']
+
+        #headers = ['id', 'diseasetype', 'date']
+        #id = str(record['_id']).split("(")[0]
+        #disease = str(record['diseasetype'])
+        #date = str(record['date'])
+        headers = ['id','Subject','DateMonday']
         id = str(record['_id']).split("(")[0]
-        disease = str(record['diseasetype'])
-        date = str(record['date'])
+        Subject = str(record['diseasetype'])
+        DateMonday = str(record['date'])
         # Adding a new key value pair
         #wordFreqDic.update({'before': 23})
-        mydict.update({id:[disease,date]})
+        mydict.update({id:[Subject,DateMonday]})
     print(mydict)
 
 ####################################OPEN EXISTING FILE#########################
@@ -58,4 +65,5 @@ def create_dict(records):
             csv_writer.writerow([k] + v)
 
     os.rename(tempfilename, csv_file_path)
+
 
